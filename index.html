@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="my-services.css">
+    <link rel="stylesheet" href="portfolio.css">
+    <link rel="stylesheet" href="contact.css">
+    <script defer src="script.js"></script>
+    <script defer src="script_small_screen.js"></script>
+    <script src="https://kit.fontawesome.com/71aa38281b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="header">
+        <div class="container">
+            <nav>
+                <img src="images/logo.png" class="logo">
+                <ul id="sidemenu">
+                    <li><a href="#header">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()"></i>
+
+            </nav>
+            <div class="header-text">
+                <p> SOFTWARE DEVELOPER</p>
+                <h1>HI , I'm <span> Avish Jhalani</span> <br>Studing in JECRC UNIVERSITY </h1>
+            </div>
+        </div>
+    </div>
+    <!-------about section ------------ -->
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="about-col1">
+                    <img src="images/user'.jpeg" class="user">
+                </div>
+                <div class="about-col2">
+                    <h1 class="subtitle">About me</h1>
+                    <p>Hello, I'm Avish Jhalani, a passionate and enthusiastic coder currently pursuing a B.Tech in
+                        Computer Science and Engineering from JECRC University. As a third-year student, I am deeply
+                        immersed in the world of software development, constantly honing my skills and exploring new
+                        technologies. My journey so far has been driven by a relentless curiosity and a desire to create
+                        innovative solutions through code. Welcome to my portfolio, where I showcase my projects and the
+                        work that fuels my passion for technology.</p>
+
+                    <div class="tab-titles">
+                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                        <p class="tab-links" onclick="opentab('Experience')">Experience</p>
+                        <p class="tab-links" onclick="opentab('Education')">Education</p>
+
+                    </div>
+                    <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                            <li><span>SOFTWARE</span><br>design and develope new WEB/app software</li>
+                            <li><span> WEB-SOFTWARE</span><br>WEB app development</li>
+                            <li><span>APP-SOFTWARE</span><br>Andriod app development</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="Experience">
+                        <ul>
+                            <li><span>Amazon Clone</span><br>created a amazon web page clone </li>
+                            <li><span> Weather Forcast</span><br>Created a Weather forcast web-application</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="Education">
+                        <ul>
+                            <li><span>2020-2026</span><br>JECRC University</li>
+                            <li><span> 2020</span><br>Secondary Education(12th)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ----------------- services ---------- -->
+    <div id="services">
+        <div class="container">
+            <h1 class="subtitle">My Services</h1>
+            <div class="services-list">
+                <div>
+                    <i class="fa-solid fa-code"></i>
+                    <h2>Web-Development</h2>
+                    <p>to create inovative website for you</p>
+                    <a href="#">Learn more</a>
+                </div>
+                <div>
+                    <i class="fas fa-crop alt"></i>
+                    <h2>App-Development</h2>
+                    <p>to create inovative Appilication for you</p>
+                    <a href="#">Learn more</a>
+                </div>
+                <div>
+                    <i class="fab fa-app-store"></i>
+                    <h2>App-Development</h2>
+                    <p>to create inovative Appilication for you</p>
+                    <a href="#">Learn more</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- ---------------portfolio-------------->
+    <div id="portfolio">
+        <div class="container">
+            <h1 class="subtitle">My Work</h1>
+            <div class="work-list">
+                <div class="work">
+                    <img src="images/work-1.png">
+                    <div class="layer">
+                        <h3>Weather Forcast</h3>
+                        <p>The app helps you to check the weather around the globe</p>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/work-2.png">
+                    <div class="layer">
+                        <h3>Music App</h3>
+                        <p>Listen music from your favourite artists</p>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/work-3.png">
+                    <div class="layer">
+                        <h3>Online Shopping App</h3>
+                        <p>Buy all the item you need in a click at your home</p>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <a href="#" class="btn">See More</a>
+        </div>
+    </div>
+    <!-- -----------contact--------------->
+    <div id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="contact-left">
+                    <h1 class="subtitle">Contact Me</h1>
+
+                    <p><i class="fa-solid fa-envelope"></i> avishjhalani20@gmail.com</p>
+
+                    <p><i class="fa-solid fa-phone"></i> 9351018609</p>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/in/avish_jhalani"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://linkedin.com/in/avishjhalani"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                    <a href="images/resume new(8=7-24)-1.pdf" download class="btn btn2">Download CV</a>
+
+                </div>
+                <div class="contact-right">
+                    <form name="submit-to-google-sheet">
+                        <input type="text" name="Name" placeholder="Your Name" required>
+                        <input type="Email" name="Email" placeholder="Your Email" required>
+                        <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                        <button type="submit" class="btn btn2">Submit</button>
+
+                    </form>
+                    <span id="msg"></span>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="coptright">
+            <p>Copyright © Avish . Made with <i class="fas fa-heart"></i> Avish Jhalani</p>
+        </div>
+    </div>
+
+
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzjyHJvKzWGtQzWuPPyHTEXpMYA2hI38OzMqscz009AaVLyC411tpCONwYfDjK5aOD6/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById("msg")
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    msg.innerHTML = "Message sent sccessfully"
+                    setTimeout(function () {
+                        msg.innerHTML = ""
+                    }, 5000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+
+
+</html>
