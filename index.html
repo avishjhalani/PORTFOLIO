@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avish Jhalani | Portfolio</title>
+  <meta name="description" content="Portfolio of Avish Jhalani, Software Engineering Intern and Full-Stack Developer specializing in React, Node.js, NestJS, and Cloud technologies.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Custom Cursor & Trail -->
+  <div class="custom-cursor" id="customCursor"></div>
+  <div class="custom-cursor-trail" id="customCursorTrail"></div>
+
+  <!-- Fullscreen Particle Background -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- Scroll Progress Bar -->
+  <div id="scrollProgressBar"></div>
+
+  <!-- Header / Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">AJ<span class="pulse">.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section" id="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="badge-container">
+          <span class="hero-badge"><span class="dot-blink"></span> Open to Roles</span>
+        </div>
+        <h1 class="hero-title">
+          Hi, I'm <br>
+          <span class="text-gradient scramble-text" data-value="Avish Jhalani">Avish Jhalani</span>
+        </h1>
+        <h2 class="hero-subtitle">
+          <span id="typed-text"></span><span class="typed-cursor">|</span>
+        </h2>
+        <p class="hero-description">
+          A passionate Software Engineer crafting high-performance backend systems, real-time web applications, and AI-driven developer tooling. Experienced in Node.js, NestJS, and Data Science.
+        </p>
+        
+        <div class="hero-ctas">
+          <a href="#projects" class="btn btn-primary magnetic">
+            <span>View Projects</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#contact" class="btn btn-secondary magnetic">
+            <span>Let's Talk</span>
+          </a>
+        </div>
+
+        <div class="social-links">
+          <a href="https://github.com/avishjhalani" target="_blank" class="social-icon magnetic" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://linkedin.com/in/avishjhalani" target="_blank" class="social-icon magnetic" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="mailto:avishjhalani20@gmail.com" class="social-icon magnetic" aria-label="Email" title="Email"><i class="fa-solid fa-envelope"></i></a>
+          <a href="https://leetcode.com/u/avishjhalani/" target="_blank" class="social-icon magnetic" aria-label="LeetCode" title="LeetCode"><i class="fa-solid fa-code"></i></a>
+          <a href="https://codeforces.com/profile/avishjhalani" target="_blank" class="social-icon magnetic" aria-label="Codeforces" title="Codeforces"><i class="fa-solid fa-cubes"></i></a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="avatar-orbit">
+          <div class="orbit-ring ring-1"></div>
+          <div class="orbit-ring ring-2"></div>
+          <div class="orbit-ring ring-3"></div>
+          <div class="avatar-card">
+            <div class="avatar-info">
+              <span class="avatar-name">AJ_SYSTEM_ONLINE</span>
+              <span class="avatar-status">CPU Temp: Stable</span>
+            </div>
+            <div class="code-terminal">
+              <div class="terminal-header">
+                <span class="term-dot close"></span>
+                <span class="term-dot shrink"></span>
+                <span class="term-dot expand"></span>
+              </div>
+              <div class="terminal-body">
+                <p><span class="keyword">const</span> developer = {</p>
+                <p>&nbsp;&nbsp;name: <span class="string">"Avish Jhalani"</span>,</p>
+                <p>&nbsp;&nbsp;skills: [<span class="string">"JS"</span>, <span class="string">"Python"</span>, <span class="string">"C++"</span>],</p>
+                <p>&nbsp;&nbsp;passion: <span class="string">"Building APIs & AI tools"</span>,</p>
+                <p>&nbsp;&nbsp;status: <span class="string">"Ready to Code"</span></p>
+                <p>};</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      <a href="#about" aria-label="Scroll Down">
+        <div class="mouse">
+          <div class="wheel"></div>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- About / Stats Section -->
+  <section class="about-section" id="about">
+    <div class="section-container">
+      <div class="section-header center">
+        <h2 class="section-title scramble-text" data-value="About Me">About Me</h2>
+        <div class="section-underline"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text-column">
+          <h3>Computer Science Undergraduate & Engineer</h3>
+          <p>
+            I am a B.Tech Computer Science student at <strong>JECRC University, Jaipur</strong> (Class of 2026, CGPA: 8.7). I specialize in designing scalable APIs, database systems, and robust full-stack applications.
+          </p>
+          <p>
+            My journey includes internships and project building where I solved real-world engineering issues, such as optimizing API response latency, designing Redis-backed job queues, and implementing secure user authentication layers. When I'm not writing server logic, I focus on competitive programming and algorithms.
+          </p>
+          <div class="education-card-inline">
+            <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="edu-details">
+              <h4>JECRC University, Jaipur</h4>
+              <p class="edu-meta">B.Tech in Computer Science | 2022 - 2026</p>
+              <p class="edu-coursework"><strong>Key Coursework:</strong> OOPs, Data Structures, Algorithms, Operating Systems, Software Engineering, DBMS, Computer Networks, System Design</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="about-stats-column">
+          <div class="stat-card glow-card">
+            <div class="stat-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" data-target="500">0</span><span class="stat-plus">+</span>
+              <p class="stat-label">Coding Problems Solved</p>
+            </div>
+          </div>
+          
+          <div class="stat-card glow-card">
+            <div class="stat-icon"><i class="fa-solid fa-ranking-star"></i></div>
+            <div class="stat-info">
+              <span class="stat-text">Top 14%</span>
+              <p class="stat-label">LeetCode Contest Rating</p>
+            </div>
+          </div>
+
+          <div class="stat-card glow-card">
+            <div class="stat-icon"><i class="fa-brands fa-google"></i></div>
+            <div class="stat-info">
+              <span class="stat-text">Certified</span>
+              <p class="stat-label">Google Cloud Foundation</p>
+            </div>
+          </div>
+
+          <div class="stat-card glow-card">
+            <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" data-target="8">0</span><span class="stat-plus">.7</span>
+              <p class="stat-label">B.Tech CGPA</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="experience-section" id="experience">
+    <div class="section-container">
+      <div class="section-header center">
+        <h2 class="section-title scramble-text" data-value="Work Experience">Work Experience</h2>
+        <div class="section-underline"></div>
+      </div>
+
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+        
+        <!-- Experience Item -->
+        <div class="timeline-item reveal-on-scroll">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Jan 2026 - June 2026</div>
+          <div class="timeline-card glow-card">
+            <div class="timeline-header">
+              <div class="company-brand">
+                <i class="fa-solid fa-brain company-logo-icon"></i>
+                <div>
+                  <h3 class="role-title">Software Engineering Intern</h3>
+                  <h4 class="company-name">Global AI Technologies</h4>
+                </div>
+              </div>
+              <span class="work-tag">Internship</span>
+            </div>
+            
+            <p class="experience-desc">
+              Part of the engineering team focused on building analytic flows, data pipeline systems, and internal operational dashboards to scale performance metrics.
+            </p>
+            
+            <ul class="experience-points">
+              <li>
+                <i class="fa-solid fa-circle-chevron-right list-bullet"></i>
+                <span>Performed end-to-end analysis of a Q4 e-commerce dataset (<strong>1,000,000+ transactions</strong>) using Python (Pandas, NumPy, Matplotlib) and MySQL to identify root causes of return rate spikes from 12% to 19%.</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-chevron-right list-bullet"></i>
+                <span>Built an interactive <strong>Power BI dashboard from scratch</strong>—cleaned raw CSV data, modeled relationships, and designed visualizations, directly presenting insights to management.</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-chevron-right list-bullet"></i>
+                <span>Identified high-risk order segments: COD orders (<strong>84.4% return rate</strong>) and size-mismatch returns (37% of total), driving operational strategies to project a 7–11% reduction in returns.</span>
+              </li>
+            </ul>
+
+            <div class="tech-stack-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">NumPy</span>
+              <span class="tag">Matplotlib</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Excel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="projects-section" id="projects">
+    <div class="section-container">
+      <div class="section-header center">
+        <h2 class="section-title scramble-text" data-value="Featured Projects">Featured Projects</h2>
+        <div class="section-underline"></div>
+      </div>
+
+      <div class="projects-grid">
+        
+        <!-- Project 1: Collab-Docs -->
+        <article class="project-card glow-card reveal-on-scroll stagger-1">
+          <div class="project-top">
+            <div class="project-icon-box">
+              <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/avishjhalani/Collab-Docs" target="_blank" class="project-link magnetic" title="View Repository"><i class="fa-brands fa-github"></i></a>
+              <a href="https://collabdocs-ten.vercel.app/" target="_blank" class="project-link magnetic" title="Live Site"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">Collab-Docs</h3>
+          <p class="project-description">
+            Real-time collaborative document workspace using Yjs CRDTs and WebSockets for cross-continent document syncing.
+          </p>
+          <ul class="project-details-list">
+            <li><i class="fa-solid opacity-icon fa-arrows-spin"></i> Syncs edits across load-balanced instances in <strong>~327ms</strong>.</li>
+            <li><i class="fa-solid opacity-icon fa-bolt"></i> Reduced PostgreSQL overhead by <strong>98%</strong> with a 5s debounced state-save.</li>
+            <li><i class="fa-solid opacity-icon fa-compress"></i> Transmits small compressed binary Yjs deltas instead of full document state.</li>
+          </ul>
+          <div class="project-tags">
+            <span>React</span>
+            <span>NestJS</span>
+            <span>Yjs</span>
+            <span>Socket.io</span>
+            <span>PostgreSQL</span>
+            <span>Redis</span>
+            <span>Prisma</span>
+            <span>Docker</span>
+          </div>
+        </article>
+
+        <!-- Project 2: BloodLink -->
+        <article class="project-card glow-card reveal-on-scroll stagger-2">
+          <div class="project-top">
+            <div class="project-icon-box">
+              <i class="fa-solid fa-droplet"></i>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/avishjhalani/BloodLink" target="_blank" class="project-link magnetic" title="View Repository"><i class="fa-brands fa-github"></i></a>
+              <a href="https://bloodlink1.vercel.app/" target="_blank" class="project-link magnetic" title="Live Site"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">BloodLink</h3>
+          <p class="project-description">
+            Full-stack donor-matching platform that geolocates and matches blood requests to eligible donors in a 10km radius.
+          </p>
+          <ul class="project-details-list">
+            <li><i class="fa-solid opacity-icon fa-location-crosshairs"></i> Uses <strong>PostGIS spatial queries</strong> (ST_DWithin, ST_Distance) for proximity.</li>
+            <li><i class="fa-solid opacity-icon fa-clipboard-check"></i> Core donor flow verified with an <strong>11-case E2E test suite</strong> (Jest/Supertest).</li>
+            <li><i class="fa-solid opacity-icon fa-shield-halved"></i> Secured session cookies with <strong>httpOnly and sameSite</strong> to prevent XSS theft.</li>
+          </ul>
+          <div class="project-tags">
+            <span>Next.js</span>
+            <span>NestJS</span>
+            <span>PostgreSQL</span>
+            <span>Redis</span>
+            <span>Prisma</span>
+            <span>JWT</span>
+            <span>Nodemailer</span>
+          </div>
+        </article>
+
+        <!-- Project 3: Notification Service API -->
+        <article class="project-card glow-card reveal-on-scroll stagger-3">
+          <div class="project-top">
+            <div class="project-icon-box">
+              <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/avishjhalani/notification-service" target="_blank" class="project-link magnetic" title="View Repository"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">Notification Service API</h3>
+          <p class="project-description">
+            A production-ready asynchronous email delivery REST API optimized to bypass slow email sending workflows.
+          </p>
+          <ul class="project-details-list">
+            <li><i class="fa-solid opacity-icon fa-circle-nodes"></i> Responds in <strong>~300ms</strong> by decoupling queueing via Redis (BullMQ).</li>
+            <li><i class="fa-solid opacity-icon fa-rotate-left"></i> Automatic retry with exponential backoff (up to 3 retries: 5s, 10s, 20s).</li>
+            <li><i class="fa-solid opacity-icon fa-lock"></i> Secured with JWT authentication (7-day token expiry) and rate limits (5 req/min).</li>
+          </ul>
+          <div class="project-tags">
+            <span>NestJS</span>
+            <span>PostgreSQL</span>
+            <span>Redis</span>
+            <span>BullMQ</span>
+            <span>Prisma</span>
+            <span>Docker</span>
+            <span>JWT</span>
+            <span>Resend</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skills-section" id="skills">
+    <div class="section-container">
+      <div class="section-header center">
+        <h2 class="section-title scramble-text" data-value="Technical Arsenal">Technical Arsenal</h2>
+        <div class="section-underline"></div>
+      </div>
+
+      <div class="skills-grid">
+        
+        <!-- Category 1: Languages -->
+        <div class="skill-category-card glow-card reveal-on-scroll stagger-1">
+          <div class="category-header">
+            <i class="fa-solid fa-code category-icon"></i>
+            <h3>Languages</h3>
+          </div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>JavaScript / TypeScript</span>
+                <span>90%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 90%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>C / C++</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>Python</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>SQL</span>
+                <span>80%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 80%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2: Web & Cloud -->
+        <div class="skill-category-card glow-card reveal-on-scroll stagger-2">
+          <div class="category-header">
+            <i class="fa-solid fa-cloud-sun category-icon"></i>
+            <h3>Web & Cloud</h3>
+          </div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>Node.js / Express.js</span>
+                <span>90%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 90%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>React.js / Next.js</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>NestJS & Socket.io</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>RESTful APIs</span>
+                <span>90%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 90%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3: Databases & Tools -->
+        <div class="skill-category-card glow-card reveal-on-scroll stagger-3">
+          <div class="category-header">
+            <i class="fa-solid fa-screwdriver-wrench category-icon"></i>
+            <h3>Tools & Databases</h3>
+          </div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>PostgreSQL / Redis</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>Prisma ORM</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>Docker & Containers</span>
+                <span>75%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 75%;"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span>Git / GitHub / Postman</span>
+                <span>90%</span>
+              </div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 90%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="section-container">
+      <div class="section-header center">
+        <h2 class="section-title scramble-text" data-value="Get In Touch">Get In Touch</h2>
+        <div class="section-underline"></div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-column reveal-on-scroll">
+          <h3>Let's build something epic!</h3>
+          <p>
+            Whether you want to discuss a software engineering role, a development project, or just chat about algorithms and technology, feel free to drop a message. I am actively looking for opportunities!
+          </p>
+          
+          <div class="contact-details-list">
+            <div class="contact-detail-item">
+              <div class="detail-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="detail-info">
+                <span>Email Me</span>
+                <a href="mailto:avishjhalani20@gmail.com">avishjhalani20@gmail.com</a>
+              </div>
+            </div>
+            
+            <div class="contact-detail-item">
+              <div class="detail-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="detail-info">
+                <span>Call Me</span>
+                <a href="tel:+919351018609">+91 9351018609</a>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <div class="detail-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="detail-info">
+                <span>Location</span>
+                <p>Jaipur, Rajasthan, India</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-column reveal-on-scroll">
+          <form class="contact-form glow-card" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe">
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required placeholder="Job Opportunity / Collab">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Let's build something cool..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit magnetic">
+              <span>Send Message</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">AJ<span>.</span></div>
+      <p class="footer-copyright">&copy; 2026 Avish Jhalani. Handcrafted with passion.</p>
+      <div class="footer-socials">
+        <a href="https://github.com/avishjhalani" target="_blank" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://linkedin.com/in/avishjhalani" target="_blank" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="mailto:avishjhalani20@gmail.com" aria-label="Email" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- GSAP Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- GSAP ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+</html>
