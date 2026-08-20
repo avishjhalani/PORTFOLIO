@@ -31,6 +31,11 @@ class Experience(BaseModel):
     Description: str |None=None
     Skills_used : list[str]=[]
 
+class Project(BaseModel):
+    name : str|None=None
+    description: str|None=None
+    skills_used : list[str]=[]
+
 class Resume(BaseModel):
     name : str|None=None
     email :str|None=None
@@ -40,7 +45,7 @@ class Resume(BaseModel):
     experience: list[Experience]=[]
     skills:list[str]=[]
     education :list[str]=[]
-    projects :list[str]=[]
+    projects :list[Project]=[]
     certificates:list[str]=[]
 resume_schema = Resume.model_json_schema()
 
