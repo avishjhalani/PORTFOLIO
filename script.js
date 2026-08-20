@@ -609,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Dynamic API routing (uses localhost for local dev, fallback for live backend hosting)
   const API_CHAT_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? '/chat'
-    : 'https://your-backend-url.onrender.com/chat'; // <-- REPLACE with your actual hosted backend URL (e.g. on Railway/Render)
+    : 'https://portfolio-h1vj.onrender.com/chat';
   const STORAGE_KEY = 'aj_resume_chat_history';
 
   // Toggle Chat window
