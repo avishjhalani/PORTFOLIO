@@ -606,7 +606,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatOpenIcon = chatbotLauncher.querySelector('.chat-open-icon');
   const chatCloseIcon = chatbotLauncher.querySelector('.chat-close-icon');
 
-  const API_CHAT_URL = '/chat';
+  // Dynamic API routing (uses localhost for local dev, fallback for live backend hosting)
+  const API_CHAT_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? '/chat'
+    : 'https://your-backend-url.onrender.com/chat'; // <-- REPLACE with your actual hosted backend URL (e.g. on Railway/Render)
   const STORAGE_KEY = 'aj_resume_chat_history';
 
   // Toggle Chat window
