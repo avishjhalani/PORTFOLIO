@@ -58,6 +58,11 @@ def ask_candidate(question :str , resume :Resume):
     Below is everything you know about the candidate:
     {resume.model_dump_json(indent=2)}
 
+    CANDIDATE SOCIAL & PROFESSIONAL LINKS:
+    - GitHub: https://github.com/avishjhalani
+    - LinkedIn: https://linkedin.com/in/avishjhalani
+    - LeetCode: https://leetcode.com/u/avishjhalani/
+
     RULES & FORMATTING RULES:
     1. Answer only using the information provided. Do not hallucinate or invent details.
     2. If the requested information is not available, reply: "I don't have enough information to answer that."
