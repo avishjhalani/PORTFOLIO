@@ -571,6 +571,69 @@
     </div>
   </footer>
 
+  <!-- Resume AI Chatbot Widget -->
+  <div class="chatbot-container" id="chatbotContainer">
+    <!-- Chat Button Launcher -->
+    <button class="chatbot-launcher magnetic" id="chatbotLauncher" aria-label="Open Chat Assistant">
+      <i class="fa-solid fa-robot chat-open-icon"></i>
+      <i class="fa-solid fa-xmark chat-close-icon" style="display: none;"></i>
+      <span class="launcher-pulse"></span>
+    </button>
+
+    <!-- Chat Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+      <!-- Chat Window Header -->
+      <div class="chatbot-header">
+        <div class="chatbot-header-info">
+          <div class="chatbot-avatar-container">
+            <i class="fa-solid fa-robot chatbot-avatar-icon"></i>
+            <span class="chatbot-online-indicator"></span>
+          </div>
+          <div>
+            <h4 class="chatbot-title">AJ Resume Bot</h4>
+            <span class="chatbot-subtitle">AI Assistant</span>
+          </div>
+        </div>
+        <div class="chatbot-header-actions">
+          <button class="chatbot-action-btn" id="chatbotClearHistory" title="Clear Chat History">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+          <button class="chatbot-action-btn" id="chatbotMaximize" title="Maximize Window">
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <button class="chatbot-action-btn" id="chatbotClose" title="Minimize Chat">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Messages Body -->
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="chat-message bot">
+          <p>Hi! I'm Avish's AI assistant. Ask me anything about his projects, skills, education, or work history!</p>
+        </div>
+      </div>
+
+      <!-- Chat Quick Suggestion Chips -->
+      <div class="chatbot-suggestions" id="chatbotSuggestions">
+        <button class="suggestion-chip" type="button">What projects has Avish built?</button>
+        <button class="suggestion-chip" type="button">What are his technical skills?</button>
+        <button class="suggestion-chip" type="button">Tell me about his work experience.</button>
+        <button class="suggestion-chip" type="button">Where is he based & how do I contact him?</button>
+      </div>
+
+      <!-- Chat Input Footer -->
+      <div class="chatbot-footer">
+        <form class="chatbot-input-form" id="chatbotInputForm">
+          <input type="text" id="chatbotInput" placeholder="Ask about Avish..." required autocomplete="off">
+          <button type="submit" id="chatbotSendBtn" aria-label="Send Message">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <!-- GSAP Core -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
