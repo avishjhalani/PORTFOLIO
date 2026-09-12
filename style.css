@@ -987,10 +987,21 @@ body {
 
 .project-details-list li {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.88rem;
   color: var(--text-secondary);
   align-items: flex-start;
+  line-height: 1.55;
+}
+
+.project-details-list li span {
+  flex: 1;
+  display: inline;
+}
+
+.project-details-list li strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .project-details-list li i {
