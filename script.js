@@ -852,7 +852,38 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error("Chatbot API error:", err);
       removeTypingIndicator();
-      appendMessage('bot', "Connection failed. Please check if the backend server is running.");
+      
+      const q = query.toLowerCase();
+      let fallbackAnswer = "";
+
+      if (q.includes("powerpilot") || q.includes("power pilot") || q.includes("power bi") || q.includes("dax")) {
+        fallbackAnswer = `**PowerPilot AI** is Avish's flagship autonomous agentic pipeline that ingests raw CSV/Parquet, cleans, models, and compiles Power BI dashboards end-to-end.\n\n` +
+          `- **Live Demo**: [https://powerpilot-ai-y758.onrender.com/](https://powerpilot-ai-y758.onrender.com/)\n` +
+          `- **GitHub Repo**: [github.com/avishjhalani/PowerPilot-AI](https://github.com/avishjhalani/PowerPilot-AI)\n` +
+          `- **Speed & Scale**: Ingests 500,000+ records in 8.6s at <35MB peak RAM via DuckDB and Polars streaming.\n` +
+          `- **LLM DAX Synthesizer**: Uses Groq LLM (gpt-oss-120b) to synthesize 6–8 production-grade DAX measures within a 4,000-char context budget.\n` +
+          `- **Self-Healing Layer**: AST-based static analysis blocking unsafe calls with 3-attempt error recovery (zero unsafe executions).`;
+      } else if (q.includes("project") || q.includes("built") || q.includes("work")) {
+        fallbackAnswer = `Here are Avish's featured engineering projects:\n\n` +
+          `1. **[PowerPilot AI](https://powerpilot-ai-y758.onrender.com/)**: Autonomous agentic Power BI dashboard generator compiling 500k+ rows in 8.6s with DuckDB, Polars, FastAPI, and Groq LLM.\n` +
+          `2. **[Collab-Docs](https://collabdocs-ten.vercel.app/)**: Real-time collaborative workspace with Yjs CRDTs, WebSockets, and 98% reduced DB write overhead.\n` +
+          `3. **[BloodLink](https://bloodlink1.vercel.app/)**: Full-stack donor matching platform using PostGIS spatial queries (10km radius) and 11-case E2E test suite.`;
+      } else if (q.includes("skill") || q.includes("stack") || q.includes("technolog")) {
+        fallbackAnswer = `**Avish's Technical Arsenal**:\n\n` +
+          `- **Languages**: C++, JavaScript, Python, SQL\n` +
+          `- **Web & Cloud**: FastAPI, Next.js, Node.js, Express.js, NestJS, Socket.io, RESTful APIs\n` +
+          `- **Databases & Tools**: PostgreSQL, DuckDB, Polars, Redis, Prisma, Docker, Git, Postman`;
+      } else if (q.includes("experience") || q.includes("intern")) {
+        fallbackAnswer = `**Software Engineering Intern at Global AI Technologies** (Jan 2026 - June 2026):\n\n` +
+          `- Analyzed 100,000+ e-commerce transactions using Python (Pandas, NumPy, Matplotlib) and MySQL.\n` +
+          `- Applied Chi-square tests and proportion z-tests to isolate return drivers (COD orders: 84.4% return rate; size-mismatch: 37%).\n` +
+          `- Built an interactive Power BI dashboard with operational recommendations projecting a 7–11% reduction in return rates.`;
+      } else {
+        fallbackAnswer = "The AI backend server is currently spinning up. In the meantime, you can explore Avish's flagship project **[PowerPilot AI](https://powerpilot-ai-y758.onrender.com/)**, test **[Collab-Docs](https://collabdocs-ten.vercel.app/)**, or review his technical skills above!";
+      }
+
+      appendMessage('bot', fallbackAnswer);
+      saveMessageToHistory('bot', fallbackAnswer);
     } finally {
       chatbotInput.disabled = false;
       chatbotSendBtn.disabled = false;

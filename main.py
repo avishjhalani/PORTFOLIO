@@ -35,6 +35,8 @@ class Project(BaseModel):
     name : str|None=None
     description: str|None=None
     skills_used : list[str]=[]
+    live_url: str|None=None
+    repository_url: str|None=None
 
 class Resume(BaseModel):
     name : str|None=None
@@ -59,18 +61,40 @@ def ask_candidate(question :str , resume :Resume):
     {resume.model_dump_json(indent=2)}
 
     CANDIDATE SOCIAL & PROFESSIONAL LINKS:
+    - Portfolio Website: https://avishportfolio00.netlify.app/
     - GitHub: https://github.com/avishjhalani
     - LinkedIn: https://linkedin.com/in/avishjhalani
-    - LeetCode: https://leetcode.com/u/avishjhalani/
+    - LeetCode: https://leetcode.com/avishjhalani
+
+    FEATURED PROJECTS & LIVE DEMO URLS:
+    1. PowerPilot AI (Flagship Project):
+       - Live Application: https://powerpilot-ai-y758.onrender.com/
+       - GitHub Repository: https://github.com/avishjhalani/PowerPilot-AI
+       - Summary: Autonomous agentic pipeline that ingests raw CSV/Parquet, cleans, models, and compiles Power BI dashboards end-to-end.
+       - Key Achievements: Processes 500,000+ records in 8.6s at <35MB peak RAM using zero-copy DuckDB profiling and out-of-core Polars streaming. Built an LLM-driven semantic modeling agent (Groq gpt-oss-120b) that synthesizes 6-8 production DAX measures from natural language within a strict 4,000-character context budget. Designed a sandboxed, self-healing execution layer using AST-based static analysis to block unsafe calls, with a 3-attempt autonomous error-recovery loop (zero unsafe executions).
+       - Tech Stack: Python, FastAPI, DuckDB, Polars, Groq LLM, Docker
+
+    2. Collab-Docs:
+       - Live Application: https://collabdocs-ten.vercel.app/
+       - GitHub Repository: https://github.com/avishjhalani/Collab-Docs
+       - Summary: Real-time collaborative document workspace using Yjs CRDTs and WebSockets across Vercel, Render, and Supabase.
+       - Key Achievements: 327ms average round-trip sync latency, 98% reduced PostgreSQL write overhead via 5-second debounced state-save buffer, 90%+ network payload reduction with compressed binary Yjs deltas (30-60 bytes/frame) over Redis Pub/Sub.
+       - Tech Stack: React, NestJS, Yjs, Socket.io, PostgreSQL, Redis, Prisma, Docker
+
+    3. BloodLink:
+       - Live Application: https://bloodlink1.vercel.app/
+       - GitHub Repository: https://github.com/avishjhalani/BloodLink
+       - Summary: Full-stack donor-matching platform geolocating donors within 10km radius using PostGIS spatial queries (ST_DWithin, ST_Distance).
+       - Key Achievements: Verified reliability with 11-case E2E test suite (Jest/Supertest) on seeded PostgreSQL. JWT in httpOnly sameSite cookies.
+       - Tech Stack: Next.js, NestJS, PostgreSQL, Redis, Prisma, JWT, Nodemailer
 
     RULES & FORMATTING RULES:
-    1. Answer only using the information provided. Do not hallucinate or invent details.
-    2. If the requested information is not available, reply: "I don't have enough information to answer that."
-    3. Keep answers highly professional, confident, and polite, as if speaking to an interviewer or recruiter.
-    4. Structure your response clearly using Markdown formatting:
+    1. Answer accurately using the candidate's background. Always share live links and GitHub repositories when asked about projects.
+    2. Keep answers highly professional, confident, and polite, as if speaking to an interviewer or recruiter.
+    3. Structure your response clearly using Markdown formatting:
        - Use bold text (**keyword**) to emphasize skills, project names, and achievements.
        - Use clean bullet points (using -) for lists of experiences, tasks, or technologies.
-       - When presenting tabular details (like comparing projects, listing technologies, or education timelines), format them in a markdown table.
+       - When presenting tabular details (like comparing projects or listing technologies), format them in a markdown table.
        - Avoid returning long walls of plain text. Use spacing and paragraphs for readability.
     """
     response = client.chat.completions.create(

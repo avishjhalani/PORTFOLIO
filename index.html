@@ -223,15 +223,15 @@
             <ul class="experience-points">
               <li>
                 <i class="fa-solid fa-circle-chevron-right list-bullet"></i>
-                <span>Performed end-to-end analysis of a Q4 e-commerce dataset (<strong>1,000,000+ transactions</strong>) using Python (Pandas, NumPy, Matplotlib) and MySQL to identify root causes of return rate spikes from 12% to 19%.</span>
+                <span>Conducted end-to-end analysis of <strong>100,000+ row</strong> Q4 e-commerce transaction dataset using Python (Pandas, NumPy, Matplotlib) and MySQL, applying hypothesis testing (Chi-square tests for categorical association, correlation analysis) to identify root causes behind a return rate spike from 12% to 19%.</span>
               </li>
               <li>
                 <i class="fa-solid fa-circle-chevron-right list-bullet"></i>
-                <span>Built an interactive <strong>Power BI dashboard from scratch</strong>—cleaned raw CSV data, modeled relationships, and designed visualizations, directly presenting insights to management.</span>
+                <span>Utilized cohort and segment-wise statistical comparison to isolate the two highest-risk drivers: COD orders (<strong>84.4% return rate</strong> vs. prepaid orders, validated via Chi-square test of independence) and size-mismatch returns (37% of total, confirmed as significant contributor via proportion z-test).</span>
               </li>
               <li>
                 <i class="fa-solid fa-circle-chevron-right list-bullet"></i>
-                <span>Identified high-risk order segments: COD orders (<strong>84.4% return rate</strong>) and size-mismatch returns (37% of total), driving operational strategies to project a 7–11% reduction in returns.</span>
+                <span>Designed and built an interactive <strong>Power BI dashboard</strong> from raw CSV data — cleaning, modelling relationships, and visualizing key return trends translating insights into operational recommendations.</span>
               </li>
             </ul>
 
@@ -260,8 +260,38 @@
 
       <div class="projects-grid">
         
-        <!-- Project 1: Collab-Docs -->
+        <!-- Project 1: PowerPilot AI -->
         <article class="project-card glow-card reveal-on-scroll stagger-1">
+          <div class="project-top">
+            <div class="project-icon-box">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/avishjhalani/PowerPilot-AI" target="_blank" class="project-link magnetic" title="View Repository"><i class="fa-brands fa-github"></i></a>
+              <a href="https://powerpilot-ai-y758.onrender.com/" target="_blank" class="project-link magnetic" title="Live Site"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <h3 class="project-title">PowerPilot AI</h3>
+          <p class="project-description">
+            Autonomous agentic pipeline that ingests raw CSV/Parquet, cleans, models, and compiles Power BI dashboards end-to-end.
+          </p>
+          <ul class="project-details-list">
+            <li><i class="fa-solid opacity-icon fa-bolt"></i> Ingests <strong>500,000+ records in 8.6s</strong> at <strong>&lt;35MB peak RAM</strong> via zero-copy DuckDB profiling and Polars streaming.</li>
+            <li><i class="fa-solid opacity-icon fa-microchip"></i> Semantic agent (<strong>Groq gpt-oss-120b</strong>) synthesizes 6–8 production-grade DAX measures within a 4,000-char context budget.</li>
+            <li><i class="fa-solid opacity-icon fa-shield-halved"></i> Sandboxed AST-based execution layer with 3-attempt autonomous error recovery and <strong>zero unsafe executions</strong>.</li>
+          </ul>
+          <div class="project-tags">
+            <span>Python</span>
+            <span>FastAPI</span>
+            <span>DuckDB</span>
+            <span>Polars</span>
+            <span>Groq LLM</span>
+            <span>Docker</span>
+          </div>
+        </article>
+
+        <!-- Project 2: Collab-Docs -->
+        <article class="project-card glow-card reveal-on-scroll stagger-2">
           <div class="project-top">
             <div class="project-icon-box">
               <i class="fa-solid fa-file-signature"></i>
@@ -276,9 +306,9 @@
             Real-time collaborative document workspace using Yjs CRDTs and WebSockets for cross-continent document syncing.
           </p>
           <ul class="project-details-list">
-            <li><i class="fa-solid opacity-icon fa-arrows-spin"></i> Syncs edits across load-balanced instances in <strong>~327ms</strong>.</li>
-            <li><i class="fa-solid opacity-icon fa-bolt"></i> Reduced PostgreSQL overhead by <strong>98%</strong> with a 5s debounced state-save.</li>
-            <li><i class="fa-solid opacity-icon fa-compress"></i> Transmits small compressed binary Yjs deltas instead of full document state.</li>
+            <li><i class="fa-solid opacity-icon fa-arrows-spin"></i> Syncs edits across load-balanced instances in <strong>~327ms</strong> average latency on cross-continent connections.</li>
+            <li><i class="fa-solid opacity-icon fa-bolt"></i> Reduced PostgreSQL overhead by <strong>98%</strong> by replacing per-keystroke writes with a 5s debounced state-save.</li>
+            <li><i class="fa-solid opacity-icon fa-compress"></i> Transmits small compressed binary Yjs deltas (30–60 bytes/frame) instead of full document state via Redis Pub/Sub.</li>
           </ul>
           <div class="project-tags">
             <span>React</span>
@@ -292,8 +322,8 @@
           </div>
         </article>
 
-        <!-- Project 2: BloodLink -->
-        <article class="project-card glow-card reveal-on-scroll stagger-2">
+        <!-- Project 3: BloodLink -->
+        <article class="project-card glow-card reveal-on-scroll stagger-3">
           <div class="project-top">
             <div class="project-icon-box">
               <i class="fa-solid fa-droplet"></i>
@@ -308,9 +338,9 @@
             Full-stack donor-matching platform that geolocates and matches blood requests to eligible donors in a 10km radius.
           </p>
           <ul class="project-details-list">
-            <li><i class="fa-solid opacity-icon fa-location-crosshairs"></i> Uses <strong>PostGIS spatial queries</strong> (ST_DWithin, ST_Distance) for proximity.</li>
-            <li><i class="fa-solid opacity-icon fa-clipboard-check"></i> Core donor flow verified with an <strong>11-case E2E test suite</strong> (Jest/Supertest).</li>
-            <li><i class="fa-solid opacity-icon fa-shield-halved"></i> Secured session cookies with <strong>httpOnly and sameSite</strong> to prevent XSS theft.</li>
+            <li><i class="fa-solid opacity-icon fa-location-crosshairs"></i> Matches donors within 10km using <strong>PostGIS spatial queries</strong> (ST_DWithin, ST_Distance).</li>
+            <li><i class="fa-solid opacity-icon fa-clipboard-check"></i> Core donor flow verified with an <strong>11-case E2E test suite</strong> passing on seeded PostgreSQL (Jest/Supertest).</li>
+            <li><i class="fa-solid opacity-icon fa-shield-halved"></i> Secured sessions using <strong>JWT stored in httpOnly, sameSite cookies</strong>, protecting against XSS theft.</li>
           </ul>
           <div class="project-tags">
             <span>Next.js</span>
@@ -320,37 +350,6 @@
             <span>Prisma</span>
             <span>JWT</span>
             <span>Nodemailer</span>
-          </div>
-        </article>
-
-        <!-- Project 3: Notification Service API -->
-        <article class="project-card glow-card reveal-on-scroll stagger-3">
-          <div class="project-top">
-            <div class="project-icon-box">
-              <i class="fa-solid fa-paper-plane"></i>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/avishjhalani/notification-service" target="_blank" class="project-link magnetic" title="View Repository"><i class="fa-brands fa-github"></i></a>
-            </div>
-          </div>
-          <h3 class="project-title">Notification Service API</h3>
-          <p class="project-description">
-            A production-ready asynchronous email delivery REST API optimized to bypass slow email sending workflows.
-          </p>
-          <ul class="project-details-list">
-            <li><i class="fa-solid opacity-icon fa-circle-nodes"></i> Responds in <strong>~300ms</strong> by decoupling queueing via Redis (BullMQ).</li>
-            <li><i class="fa-solid opacity-icon fa-rotate-left"></i> Automatic retry with exponential backoff (up to 3 retries: 5s, 10s, 20s).</li>
-            <li><i class="fa-solid opacity-icon fa-lock"></i> Secured with JWT authentication (7-day token expiry) and rate limits (5 req/min).</li>
-          </ul>
-          <div class="project-tags">
-            <span>NestJS</span>
-            <span>PostgreSQL</span>
-            <span>Redis</span>
-            <span>BullMQ</span>
-            <span>Prisma</span>
-            <span>Docker</span>
-            <span>JWT</span>
-            <span>Resend</span>
           </div>
         </article>
 
@@ -422,21 +421,21 @@
             </div>
             <div class="skill-item">
               <div class="skill-info">
-                <span>React.js / Next.js</span>
+                <span>Next.js / React</span>
                 <span>85%</span>
               </div>
               <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
             </div>
             <div class="skill-item">
               <div class="skill-info">
-                <span>NestJS & Socket.io</span>
+                <span>FastAPI / Python APIs</span>
                 <span>85%</span>
               </div>
               <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
             </div>
             <div class="skill-item">
               <div class="skill-info">
-                <span>RESTful APIs</span>
+                <span>RESTful APIs & Socket.io</span>
                 <span>90%</span>
               </div>
               <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 90%;"></div></div>
@@ -468,16 +467,16 @@
             <div class="skill-item">
               <div class="skill-info">
                 <span>Docker & Containers</span>
-                <span>75%</span>
+                <span>80%</span>
               </div>
-              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 75%;"></div></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 80%;"></div></div>
             </div>
             <div class="skill-item">
               <div class="skill-info">
-                <span>Git / GitHub / Postman</span>
-                <span>90%</span>
+                <span>DuckDB, Polars & Git</span>
+                <span>85%</span>
               </div>
-              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 90%;"></div></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="--percent: 85%;"></div></div>
             </div>
           </div>
         </div>
@@ -616,10 +615,10 @@
 
       <!-- Chat Quick Suggestion Chips -->
       <div class="chatbot-suggestions" id="chatbotSuggestions">
+        <button class="suggestion-chip" type="button">Tell me about PowerPilot AI</button>
         <button class="suggestion-chip" type="button">What projects has Avish built?</button>
         <button class="suggestion-chip" type="button">What are his technical skills?</button>
         <button class="suggestion-chip" type="button">Tell me about his work experience.</button>
-        <button class="suggestion-chip" type="button">Where is he based & how do I contact him?</button>
       </div>
 
       <!-- Chat Input Footer -->
