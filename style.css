@@ -1745,6 +1745,25 @@ body {
   gap: 8px;
   background: rgba(10, 15, 30, 0.4);
   border-top: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+}
+
+.chatbot-suggestions.hidden {
+  display: none !important;
+}
+
+.chat-message.bot.streaming::after {
+  content: '▋';
+  display: inline-block;
+  color: var(--accent-cyan);
+  animation: cursor-blink 0.8s infinite;
+  margin-left: 2px;
+  font-weight: bold;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .suggestion-chip {

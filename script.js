@@ -791,6 +791,20 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history));
   };
 
+  const chatbotSuggestions = document.getElementById('chatbotSuggestions');
+
+  const hideSuggestions = () => {
+    if (chatbotSuggestions) {
+      chatbotSuggestions.classList.add('hidden');
+    }
+  };
+
+  const showSuggestions = () => {
+    if (chatbotSuggestions) {
+      chatbotSuggestions.classList.remove('hidden');
+    }
+  };
+
   // Clear chat history
   const clearChatHistory = () => {
     sessionStorage.removeItem(STORAGE_KEY);
@@ -799,6 +813,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <p>Hi! I'm Avish's AI assistant. Ask me anything about his projects, skills, education, or work history!</p>
       </div>
     `;
+    showSuggestions();
   };
 
   if (chatbotClearHistory) {
@@ -811,14 +826,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (history.length > 0) {
       chatbotMessages.innerHTML = '';
       history.forEach(msg => appendMessage(msg.sender, msg.text));
+      hideSuggestions();
+    } else {
+      showSuggestions();
     }
   };
   initChat();
 
-  // Send message function
+  // Typewriter streaming effect for smooth token-by-token rendering
+  const streamTextToElement = (element, text, speedMs = 12) => {
+    return new Promise((resolve) => {
+      let currentIndex = 0;
+      const stepSize = Math.max(1, Math.floor(text.length / 130));
+
+      const interval = setInterval(() => {
+        currentIndex += stepSize;
+        if (currentIndex >= text.length) {
+          currentIndex = text.length;
+          clearInterval(interval);
+          element.innerHTML = formatMarkdown(text);
+          scrollToBottom();
+          resolve();
+        } else {
+          element.innerHTML = formatMarkdown(text.slice(0, currentIndex));
+          scrollToBottom();
+        }
+      }, speedMs);
+    });
+  };
+
+  // Send message function with real-time streaming
   const handleSendMessage = async (text) => {
     if (!text || text.trim() === '') return;
     const query = text.trim();
+
+    // Instantly hide the recommendation chips once a question is asked
+    hideSuggestions();
 
     appendMessage('user', query);
     saveMessageToHistory('user', query);
@@ -829,30 +872,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showTypingIndicator();
 
+    let botMsgDiv = null;
+
     try {
       const response = await fetch(API_CHAT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ question: query })
+        body: JSON.stringify({ question: query, stream: true })
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error("API responded with status " + response.status);
+      }
+
+      const contentType = response.headers.get('content-type') || '';
       removeTypingIndicator();
 
-      if (data.answer) {
-        appendMessage('bot', data.answer);
-        saveMessageToHistory('bot', data.answer);
-      } else if (data.error) {
-        appendMessage('bot', `Error: ${data.error}`);
+      botMsgDiv = document.createElement('div');
+      botMsgDiv.className = 'chat-message bot streaming';
+      chatbotMessages.appendChild(botMsgDiv);
+      scrollToBottom();
+
+      let accumulatedText = "";
+
+      // Stream directly if server returns text/plain or chunked stream
+      if (response.body && !contentType.includes('application/json')) {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value, { stream: true });
+          accumulatedText += chunk;
+          botMsgDiv.innerHTML = formatMarkdown(accumulatedText);
+          scrollToBottom();
+        }
+
+        botMsgDiv.classList.remove('streaming');
+        saveMessageToHistory('bot', accumulatedText);
       } else {
-        appendMessage('bot', "I couldn't process that response. Please try again.");
+        // Handle JSON response with typewriter stream
+        const data = await response.json();
+        const answer = data.answer || (data.error ? `Error: ${data.error}` : "I couldn't process that response.");
+        await streamTextToElement(botMsgDiv, answer);
+        botMsgDiv.classList.remove('streaming');
+        saveMessageToHistory('bot', answer);
       }
     } catch (err) {
       console.error("Chatbot API error:", err);
       removeTypingIndicator();
-      
+
+      if (!botMsgDiv) {
+        botMsgDiv = document.createElement('div');
+        botMsgDiv.className = 'chat-message bot streaming';
+        chatbotMessages.appendChild(botMsgDiv);
+        scrollToBottom();
+      }
+
       const q = query.toLowerCase();
       let fallbackAnswer = "";
 
@@ -882,9 +961,13 @@ document.addEventListener('DOMContentLoaded', () => {
         fallbackAnswer = "The AI backend server is currently spinning up. In the meantime, you can explore Avish's flagship project **[PowerPilot AI](https://powerpilot-ai-y758.onrender.com/)**, test **[Collab-Docs](https://collabdocs-ten.vercel.app/)**, or review his technical skills above!";
       }
 
-      appendMessage('bot', fallbackAnswer);
+      await streamTextToElement(botMsgDiv, fallbackAnswer);
+      botMsgDiv.classList.remove('streaming');
       saveMessageToHistory('bot', fallbackAnswer);
     } finally {
+      if (botMsgDiv) {
+        botMsgDiv.classList.remove('streaming');
+      }
       chatbotInput.disabled = false;
       chatbotSendBtn.disabled = false;
       chatbotInput.focus();

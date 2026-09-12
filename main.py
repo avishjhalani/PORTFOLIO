@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import StreamingResponse, FileResponse
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -52,10 +53,11 @@ class Resume(BaseModel):
 resume_schema = Resume.model_json_schema()
 
 class ChatRequest(BaseModel):
-    question:str
+    question: str
+    stream: bool = True
 
-def ask_candidate(question :str , resume :Resume):
-    system_prompt=f"""
+def get_candidate_system_prompt(resume: Resume) -> str:
+    return f"""
     You are an AI Assistant representing a job candidate (Avish Jhalani) during a virtual interview.
     Below is everything you know about the candidate:
     {resume.model_dump_json(indent=2)}
@@ -97,6 +99,9 @@ def ask_candidate(question :str , resume :Resume):
        - When presenting tabular details (like comparing projects or listing technologies), format them in a markdown table.
        - Avoid returning long walls of plain text. Use spacing and paragraphs for readability.
     """
+
+def ask_candidate(question :str , resume :Resume):
+    system_prompt = get_candidate_system_prompt(resume)
     response = client.chat.completions.create(
         model =MODEL,
         messages=[
@@ -111,6 +116,27 @@ def ask_candidate(question :str , resume :Resume):
         ]
     )
     return response.choices[0].message.content
+
+def ask_candidate_stream(question: str, resume: Resume):
+    system_prompt = get_candidate_system_prompt(resume)
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt
+            },
+            {
+                "role": "user",
+                "content": question
+            }
+        ],
+        stream=True
+    )
+    for chunk in response:
+        delta = chunk.choices[0].delta.content
+        if delta:
+            yield delta
 def parse_resume(resume_text):
     system_prompt=f"""
     You are a expert resume parser.
@@ -209,19 +235,23 @@ def load_resume():
 def chat(request: ChatRequest):
 
     if candidate_resume is None:
-
         return {
             "error": "Resume has not been loaded"
         }
 
-    answer = ask_candidate(
-        request.question,
-        candidate_resume
-    )
-
-    return {
-        "answer": answer
-    }
+    if request.stream:
+        return StreamingResponse(
+            ask_candidate_stream(request.question, candidate_resume),
+            media_type="text/plain"
+        )
+    else:
+        answer = ask_candidate(
+            request.question,
+            candidate_resume
+        )
+        return {
+            "answer": answer
+        }
 
 from fastapi.responses import FileResponse
 
