@@ -266,3 +266,11 @@ def read_style():
 @app.get("/script.js")
 def read_script():
     return FileResponse("script.js")
+
+@app.get("/favicon.ico")
+def read_favicon():
+    return FileResponse("favicon.ico")
+
+@app.get("/favicon.svg")
+def read_favicon_svg():
+    return FileResponse("favicon.svg")
