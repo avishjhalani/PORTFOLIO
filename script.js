@@ -657,16 +657,60 @@ document.addEventListener('DOMContentLoaded', () => {
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
   };
 
-  // Simple markdown to HTML formatter for bot messages
+  // Enhanced markdown to HTML formatter for bot messages
   const formatMarkdown = (text) => {
     if (!text) return '';
-    
-    let html = text
+
+    // 1. Protect & convert links before HTML escaping
+    const linkTokens = [];
+    let processed = text;
+
+    // Protect markdown links [label](url)
+    processed = processed.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, (match, label, url) => {
+      const isButton = /live|demo|github|repo|app|website|view/i.test(label);
+      const badgeClass = isButton ? 'chat-link chat-badge' : 'chat-link';
+      const icon = /github|repo/i.test(label)
+        ? '<i class="fa-brands fa-github"></i> '
+        : '<i class="fa-solid fa-arrow-up-right-from-square"></i> ';
+      const token = `__CHAT_LINK_${linkTokens.length}__`;
+      linkTokens.push(`<a href="${url}" target="_blank" rel="noopener noreferrer" class="${badgeClass}">${icon}${label}</a>`);
+      return token;
+    });
+
+    // Protect angle bracket autolinks <https://...>
+    processed = processed.replace(/<(https?:\/\/[^\s>]+)>/g, (match, url) => {
+      const token = `__CHAT_LINK_${linkTokens.length}__`;
+      const cleanUrl = url.replace(/[.,;!?]+$/, '');
+      const label = cleanUrl.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      const isGithub = /github\.com/i.test(cleanUrl);
+      const icon = isGithub ? '<i class="fa-brands fa-github"></i> ' : '<i class="fa-solid fa-arrow-up-right-from-square"></i> ';
+      linkTokens.push(`<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="chat-link chat-badge">${icon}${label}</a>`);
+      return token;
+    });
+
+    // Protect plain URLs
+    processed = processed.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, (match, prefix, url) => {
+      const token = `__CHAT_LINK_${linkTokens.length}__`;
+      const cleanUrl = url.replace(/[.,;!?]+$/, '');
+      const label = cleanUrl.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      const isGithub = /github\.com/i.test(cleanUrl);
+      const icon = isGithub ? '<i class="fa-brands fa-github"></i> ' : '<i class="fa-solid fa-arrow-up-right-from-square"></i> ';
+      linkTokens.push(`<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="chat-link chat-badge">${icon}${label}</a>`);
+      return `${prefix}${token}`;
+    });
+
+    // 2. Escape HTML special characters
+    let html = processed
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
-    // Parse tables
+    // 3. Restore protected link tokens
+    linkTokens.forEach((linkHtml, idx) => {
+      html = html.replace(new RegExp(`__CHAT_LINK_${idx}__`, 'g'), linkHtml);
+    });
+
+    // 4. Parse Tables
     const lines = html.split('\n');
     let inTable = false;
     let tableHtml = '';
@@ -674,15 +718,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
-      
-      if (line.startsWith('|') && line.endsWith('|')) {
-        if (line.match(/^\|[\s\-\:\|]+$/)) {
-          continue; // skip divider
+
+      if (line.startsWith('|')) {
+        // Skip separator row |---|:---|
+        if (/^\|[\s\:\-\|]+$/.test(line)) {
+          continue;
         }
-        
-        const cells = line.split('|').slice(1, -1).map(c => c.trim());
-        let rowHtml = '<tr>';
-        
+
+        // Support in-flight streaming rows where trailing pipe may not have arrived yet
+        const normalizedLine = line.endsWith('|') ? line : line + ' |';
+        const cells = normalizedLine.split('|').slice(1, -1).map(c => c.trim());
+
         if (!inTable) {
           inTable = true;
           tableHtml = '<div class="table-container"><table><thead><tr>';
@@ -690,13 +736,12 @@ document.addEventListener('DOMContentLoaded', () => {
             tableHtml += `<th>${cell}</th>`;
           });
           tableHtml += '</tr></thead><tbody>';
-          continue;
         } else {
+          tableHtml += '<tr>';
           cells.forEach(cell => {
-            rowHtml += `<td>${cell}</td>`;
+            tableHtml += `<td>${cell}</td>`;
           });
-          rowHtml += '</tr>';
-          tableHtml += rowHtml;
+          tableHtml += '</tr>';
         }
       } else {
         if (inTable) {
@@ -708,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
         outputLines.push(lines[i]);
       }
     }
-    
+
     if (inTable) {
       tableHtml += '</tbody></table></div>';
       outputLines.push(tableHtml);
@@ -716,25 +761,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     html = outputLines.join('\n');
 
-    // Bold formatting: **text** -> <strong>text</strong>
+    // 5. Bold formatting: **text** -> <strong>text</strong>
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-    // Bullet lists: - item -> <li>item</li>
-    html = html.replace(/^\s*[-*+]\s+(.+)$/gm, '<li>$1</li>');
-    
-    // Wrap consecutive list items in <ul>
-    html = html.replace(/(<li>.*<\/li>)+/g, '<ul>$&</ul>');
+    // 6. Inline code: `code` -> <code class="chat-code">code</code>
+    html = html.replace(/`([^`]+)`/g, '<code class="chat-code">$1</code>');
 
-    // Replace newlines with <br>
+    // 7. Headings: ### H3, ## H2, # H1
+    html = html.replace(/^###\s+(.+)$/gm, '<h4 class="chat-h4">$1</h4>');
+    html = html.replace(/^##\s+(.+)$/gm, '<h3 class="chat-h3">$1</h3>');
+    html = html.replace(/^#\s+(.+)$/gm, '<h3 class="chat-h3">$1</h3>');
+
+    // 8. Horizontal rules: --- or ***
+    html = html.replace(/^(\s*[-*_]\s*){3,}$/gm, '<hr class="chat-hr">');
+
+    // 9. Bullet lists: - item or * item -> <li>item</li>
+    html = html.replace(/^\s*[-*+]\s+(.+)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>[\s\S]*?<\/li>)+/g, (match) => {
+      return `<ul>${match}</ul>`;
+    });
+
+    // 10. Clean up newlines and strip excessive <br>
+    html = html.replace(/\n{3,}/g, '\n\n');
     html = html.replace(/\n/g, '<br>');
-    
-    // Clean up br tags inside/around list and table tags
-    html = html.replace(/<br>\s*<ul>/g, '<ul>');
-    html = html.replace(/<\/ul>\s*<br>/g, '</ul>');
-    html = html.replace(/<br>\s*<div class="table-container">/g, '<div class="table-container">');
-    html = html.replace(/<\/div>\s*<br>/g, '</div>');
-    html = html.replace(/<tr>\s*<br>/g, '<tr>');
-    html = html.replace(/<\/tr>\s*<br>/g, '</tr>');
+
+    // Clean up br tags around all block-level elements
+    html = html.replace(/<br>\s*(<\/?(div|table|thead|tbody|tr|th|td|ul|ol|li|h3|h4|hr)[^>]*>)/gi, '$1');
+    html = html.replace(/(<\/?(div|table|thead|tbody|tr|th|td|ul|ol|li|h3|h4|hr)[^>]*>)\s*<br>/gi, '$1');
 
     return html;
   };
@@ -744,7 +797,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const msgDiv = document.createElement('div');
     msgDiv.className = `chat-message ${sender}`;
     if (sender === 'bot') {
-      msgDiv.innerHTML = formatMarkdown(text);
+      const formatted = formatMarkdown(text);
+      if (formatted.includes('table-container')) {
+        msgDiv.classList.add('has-table');
+      }
+      msgDiv.innerHTML = formatted;
     } else {
       const escapedText = text
         .replace(/&/g, '&amp;')
@@ -844,11 +901,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentIndex >= text.length) {
           currentIndex = text.length;
           clearInterval(interval);
-          element.innerHTML = formatMarkdown(text);
+          const formatted = formatMarkdown(text);
+          element.classList.toggle('has-table', formatted.includes('table-container'));
+          element.innerHTML = formatted;
           scrollToBottom();
           resolve();
         } else {
-          element.innerHTML = formatMarkdown(text.slice(0, currentIndex));
+          const formatted = formatMarkdown(text.slice(0, currentIndex));
+          element.classList.toggle('has-table', formatted.includes('table-container'));
+          element.innerHTML = formatted;
           scrollToBottom();
         }
       }, speedMs);
@@ -907,7 +968,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (done) break;
           const chunk = decoder.decode(value, { stream: true });
           accumulatedText += chunk;
-          botMsgDiv.innerHTML = formatMarkdown(accumulatedText);
+          const formatted = formatMarkdown(accumulatedText);
+          botMsgDiv.classList.toggle('has-table', formatted.includes('table-container'));
+          botMsgDiv.innerHTML = formatted;
           scrollToBottom();
         }
 
